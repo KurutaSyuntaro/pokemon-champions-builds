@@ -213,7 +213,10 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 header{background:linear-gradient(135deg,#4a90d9,#e05070);padding:2.5rem 1rem 2rem;text-align:center;border-bottom:3px solid var(--accent);color:#fff}
 header h1{font-size:1.8rem;letter-spacing:.05em}header h1 a{color:#fff;text-decoration:none}
 header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
-main{max-width:900px;margin:2rem auto;padding:0 1rem}
+main{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:2rem;align-items:start}
+.content{min-width:0}
+.sidebar{position:sticky;top:1.5rem}
 .breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
 .breadcrumb a{color:var(--accent)}
 
@@ -264,19 +267,19 @@ main{max-width:900px;margin:2rem auto;padding:0 1rem}
 .social-links a{color:rgba(255,255,255,.9);font-size:.85rem;display:flex;align-items:center;gap:.3rem;padding:.3rem .7rem;border-radius:999px;background:rgba(255,255,255,.15);transition:background .15s;text-decoration:none}
 .social-links a:hover{background:rgba(255,255,255,.3);text-decoration:none}
 .social-links svg{width:16px;height:16px;fill:currentColor}
-.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem;display:flex;gap:1.2rem;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.profile-avatar{width:72px;height:72px;border-radius:50%;background:var(--card);flex-shrink:0;object-fit:cover}
-.profile-body{flex:1;min-width:0}
-.profile-body .name{font-size:1.1rem;font-weight:700;margin-bottom:.3rem}
-.profile-body .bio{font-size:.88rem;color:var(--text-muted);margin-bottom:.5rem}
-.profile-links{display:flex;gap:.6rem;flex-wrap:wrap}
-.profile-links a{font-size:.78rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .6rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;text-align:center;gap:.8rem}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--card);object-fit:cover}
+.profile-body{min-width:0}
+.profile-body .name{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.profile-body .bio{font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem}
+.profile-links{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
 .profile-links a:hover{background:var(--border);text-decoration:none}
 .profile-links svg{width:14px;height:14px;fill:currentColor}
-@media(max-width:600px){.profile-card{flex-direction:column;text-align:center}.profile-links{justify-content:center}}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
 footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
 footer a{color:var(--accent)}
-@media(max-width:600px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}
+@media(max-width:768px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}
 """.strip()
 
 SITE_TITLE = "ポケモンチャンピオンズ 構築記録"
@@ -480,7 +483,7 @@ def generate_index(teams: list[dict]) -> str:
     </div>
   </div>
 </div>"""
-    body = f'{profile}\n<div class="post-list">\n{cards}</div>'
+    body = f'<div class="layout">\n<div class="content">\n<div class="post-list">\n{cards}</div>\n</div>\n<aside class="sidebar">\n{profile}\n</aside>\n</div>'
     return _page_shell("トップ", body)
 
 
