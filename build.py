@@ -2,9 +2,10 @@
 """チーム構築 Markdown → GitHub Pages HTML ビルドスクリプト
 
 使い方:
-    python docs/build.py
+    python site/build.py
 
-vs/teams/ に新しい構築ファイルを追加したら再実行でサイト更新。
+site/teams/ に新しい構築ファイルを追加したら再実行でサイト更新。
+一覧ページ (index.html) + 個別記事ページ (teams/*.html) を生成する。
 """
 
 import html
@@ -13,15 +14,15 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TEAMS_DIR = ROOT / "vs" / "teams"
-OUTPUT = ROOT / "docs" / "index.html"
+TEAMS_DIR = ROOT / "site" / "teams"
+OUT_DIR = ROOT / "site"
 
 # ---------------------------------------------------------------------------
 # ポケモン日本語名 → PokeAPI スプライト ID
 # 新しいポケモンを使ったらここに追加
 # ---------------------------------------------------------------------------
 SPRITE_ID: dict[str, int] = {
-    "メガリザードンY": 10033,
+    "メガリザードンY": 10035,
     "メガリザードンX": 10034,
     "リザードン": 6,
     "メガゲンガー": 10038,
@@ -47,7 +48,7 @@ SPRITE_ID: dict[str, int] = {
     "ギャラドス": 130,
     "エーフィ": 196,
     "ロトムW": 10008,
-    "ウォッシュロトム": 10008,
+    "ウォッシュロトム": 10009,
     "ロトム": 479,
     "ピカチュウ": 25,
     "ドラパルト": 887,
@@ -208,20 +209,35 @@ CSS = """
 :root{--bg:#f5f6fa;--surface:#fff;--card:#e8edf5;--accent:#e05070;--text:#2d3048;--text-muted:#6b7080;--border:#d8dce6}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 header{background:linear-gradient(135deg,#4a90d9,#e05070);padding:2.5rem 1rem 2rem;text-align:center;border-bottom:3px solid var(--accent);color:#fff}
-header h1{font-size:1.8rem;letter-spacing:.05em;color:#fff}header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
+header h1{font-size:1.8rem;letter-spacing:.05em}header h1 a{color:#fff;text-decoration:none}
+header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
 main{max-width:900px;margin:2rem auto;padding:0 1rem}
-.team-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:2rem;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.team-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
-.team-header{background:var(--card);padding:1.2rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.team-header h2{font-size:1.2rem}
-.team-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
-.tag{font-size:.75rem;padding:.15rem .6rem;border-radius:999px;background:var(--accent);color:#fff;font-weight:600}
+.breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--accent)}
+
+/* --- index cards --- */
+.post-list{display:flex;flex-direction:column;gap:1.5rem}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
+.post-sprites{display:flex;gap:.3rem;flex-shrink:0}
+.post-sprites img{width:40px;height:40px;object-fit:contain}
+.post-meta{flex:1;min-width:0}
+.post-meta h2{font-size:1.15rem;margin-bottom:.3rem;color:var(--text)}
+.post-meta .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.4rem}
+.post-meta .excerpt{font-size:.88rem;color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:.72rem;padding:.15rem .55rem;border-radius:999px;background:var(--accent);color:#fff;font-weight:600}
 .tag.doubles{background:#2d9d6a}.tag.singles{background:#4a90d9}.tag.reg{background:#7c6bc4}.tag.latest{background:#e0a020}
-.toggle-icon{font-size:1.4rem;transition:transform .2s;color:var(--text-muted)}
-.team-card.open .toggle-icon{transform:rotate(180deg)}
-.team-body{display:none;padding:1.5rem}.team-card.open .team-body{display:block}
+
+/* --- article --- */
+.article-header{margin-bottom:1.5rem}
+.article-header h2{font-size:1.5rem;margin-bottom:.5rem}
+.article-header .tags{display:flex;gap:.5rem;flex-wrap:wrap}
 .concept{background:var(--bg);border-left:4px solid var(--accent);padding:.8rem 1rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-muted)}
+.party-sprites{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.party-sprites img{width:56px;height:56px;object-fit:contain;background:var(--card);border-radius:8px;padding:4px}
 .pokemon-slot{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
 .pokemon-sprite{width:68px;height:68px;flex-shrink:0;border-radius:8px;background:var(--card);object-fit:contain}
 .pokemon-info{flex:1;min-width:0}
@@ -232,7 +248,7 @@ main{max-width:900px;margin:2rem auto;padding:0 1rem}
 .moves{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem}
 .moves li{background:var(--card);padding:.2rem .7rem;border-radius:6px;font-size:.85rem}
 .pokemon-note{font-size:.85rem;color:var(--text-muted);margin-top:.4rem}
-.selection{margin-top:1.5rem}.selection h3{font-size:1rem;margin-bottom:.5rem}
+.selection{margin-top:1.5rem}.selection h3{font-size:1.1rem;margin-bottom:.8rem}
 .sel-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin-bottom:.8rem}
 .sel-block h4{font-size:.95rem;color:var(--accent);margin-bottom:.3rem}
 .sel-block p,.sel-block ol{font-size:.9rem;color:var(--text-muted)}.sel-block ol{padding-left:1.2rem}
@@ -242,11 +258,45 @@ main{max-width:900px;margin:2rem auto;padding:0 1rem}
 .team-images-grid img{max-width:100%;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .15s}
 .team-images-grid img:hover{transform:scale(1.02)}
 .team-images-grid a{display:block;flex:1;min-width:min(100%,280px)}
+.nav-links{display:flex;justify-content:space-between;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.9rem}
+.nav-links a{display:flex;align-items:center;gap:.3rem}
 footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
-footer a{color:var(--accent);text-decoration:none}
-@media(max-width:600px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}}
+footer a{color:var(--accent)}
+@media(max-width:600px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}
 """.strip()
 
+SITE_TITLE = "ポケモンチャンピオンズ 構築記録"
+SITE_DESC = "構築済みパーティーの記録・共有サイト"
+GITHUB_URL = "https://github.com/KurutaSyuntaro/pokemon-champions-vs"
+
+
+def _page_shell(title: str, body: str, *, css_path: str = "") -> str:
+    """共通 HTML シェル"""
+    css_href = css_path or ""
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{_h(title)} — {SITE_TITLE}</title>
+  <style>{CSS}</style>
+</head>
+<body>
+<header>
+  <h1><a href="{css_href}index.html">{SITE_TITLE}</a></h1>
+  <p>{SITE_DESC}</p>
+</header>
+<main>
+{body}
+</main>
+<footer>
+  <p>{SITE_TITLE} — <a href="{GITHUB_URL}">GitHub</a></p>
+</footer>
+</body>
+</html>"""
+
+
+# --- 個別記事ページ ---
 
 def _render_pokemon(p: dict) -> str:
     sprite_html = ""
@@ -255,7 +305,6 @@ def _render_pokemon(p: dict) -> str:
             f'<img class="pokemon-sprite" src="{_h(p["sprite"])}" '
             f'alt="{_h(p["name"])}" loading="lazy">'
         )
-
     rows = ""
     if p["ability"]:
         rows += f"<tr><th>特性</th><td>{_h(p['ability'])}</td></tr>"
@@ -263,13 +312,10 @@ def _render_pokemon(p: dict) -> str:
         rows += f"<tr><th>性格</th><td>{_h(p['nature'])}</td></tr>"
     if p["evs"]:
         rows += f"<tr><th>努力値</th><td>{_h(p['evs'])}</td></tr>"
-
     moves_html = "".join(f"<li>{_h(m)}</li>" for m in p["moves"])
-
     note_html = ""
     if p["note"]:
         note_html = f'<p class="pokemon-note">{_h(p["note"])}</p>'
-
     return f"""<div class="pokemon-slot">
   {sprite_html}
   <div class="pokemon-info">
@@ -286,9 +332,8 @@ def _render_images(images: list[tuple[str, str]]) -> str:
         return ""
     items = ""
     for alt, src in images:
-        # vs/teams/ からの相対パスを docs/ からの相対パスに変換
         if not src.startswith(("http://", "https://")):
-            src = "images/" + src.split("/")[-1]
+            src = "../images/" + src.split("/")[-1]
         items += (
             f'<a href="{_h(src)}" target="_blank">'
             f'<img src="{_h(src)}" alt="{_h(alt)}" loading="lazy">'
@@ -310,12 +355,11 @@ def _render_selections(sels: list[dict]) -> str:
             items = []
             other = []
             for line in lines:
-                m = re.match(r"\d+\.\s*(.+)", line.strip())
-                if m:
-                    items.append(f"<li>{m.group(1)}</li>")
-                else:
-                    if line.strip():
-                        other.append(line.strip())
+                m_ol = re.match(r"\d+\.\s*(.+)", line.strip())
+                if m_ol:
+                    items.append(f"<li>{m_ol.group(1)}</li>")
+                elif line.strip():
+                    other.append(line.strip())
             body_html = ""
             if other:
                 body_html += "<p>" + "<br>".join(other) + "</p>"
@@ -327,66 +371,79 @@ def _render_selections(sels: list[dict]) -> str:
     return f'<div class="selection"><h3>選出テンプレ</h3>\n{blocks}</div>'
 
 
-def _render_team(team: dict, index: int) -> str:
-    open_class = " open" if index == 0 else ""
+def generate_article(team: dict, prev_team: dict | None, next_team: dict | None) -> str:
     fmt_class = "doubles" if team["format"] == "ダブル" else "singles"
+    latest_tag = '<span class="tag latest">最新</span>' if team["is_latest"] else ""
+
+    # パーティ一覧スプライト
+    sprites_html = ""
+    for p in team["pokemon"]:
+        if p["sprite"]:
+            sprites_html += f'<img src="{_h(p["sprite"])}" alt="{_h(p["name"])}" loading="lazy">'
+    if sprites_html:
+        sprites_html = f'<div class="party-sprites">{sprites_html}</div>'
+
     pokemon_html = "\n".join(_render_pokemon(p) for p in team["pokemon"])
     images_html = _render_images(team["images"])
     sel_html = _render_selections(team["selections"])
 
-    latest_tag = ""
-    if team["is_latest"]:
-        latest_tag = '<span class="tag latest">最新</span>'
+    # 前後ナビ
+    nav_prev = ""
+    nav_next = ""
+    if prev_team:
+        nav_prev = f'<a href="{_h(prev_team["filename"])}.html">← {_h(prev_team["title"])}</a>'
+    if next_team:
+        nav_next = f'<a href="{_h(next_team["filename"])}.html">{_h(next_team["title"])} →</a>'
+    nav_html = f'<div class="nav-links"><div>{nav_prev}</div><div>{nav_next}</div></div>'
 
-    return f"""<div class="team-card{open_class}" id="{_h(team['filename'])}">
-  <div class="team-header" onclick="toggle(this)">
-    <div>
-      <h2>{_h(team['title'])}</h2>
-      <div class="team-tags">
-        <span class="tag reg">{_h(team['regulation'])}</span>
-        <span class="tag {fmt_class}">{_h(team['format'])}</span>
+    body = f"""<div class="breadcrumb"><a href="../index.html">トップ</a> &gt; {_h(team['title'])}</div>
+<div class="article-header">
+  <h2>{_h(team['title'])}</h2>
+  <div class="tags">
+    <span class="tag reg">{_h(team['regulation'])}</span>
+    <span class="tag {fmt_class}">{_h(team['format'])}</span>
+    {latest_tag}
+  </div>
+</div>
+<div class="concept">{_h(team['concept'])}</div>
+{sprites_html}
+{images_html}
+{pokemon_html}
+{sel_html}
+{nav_html}"""
+    return _page_shell(team["title"], body, css_path="../")
+
+
+# --- 一覧ページ ---
+
+def generate_index(teams: list[dict]) -> str:
+    cards = ""
+    for t in teams:
+        fmt_class = "doubles" if t["format"] == "ダブル" else "singles"
+        latest_tag = '<span class="tag latest">最新</span>' if t["is_latest"] else ""
+
+        sprites = ""
+        for p in t["pokemon"][:6]:
+            if p["sprite"]:
+                sprites += f'<img src="{_h(p["sprite"])}" alt="{_h(p["name"])}" loading="lazy">'
+
+        cards += f"""<a class="post-card" href="teams/{_h(t['filename'])}.html">
+  <div class="post-card-inner">
+    <div class="post-sprites">{sprites}</div>
+    <div class="post-meta">
+      <div class="tags">
+        <span class="tag reg">{_h(t['regulation'])}</span>
+        <span class="tag {fmt_class}">{_h(t['format'])}</span>
         {latest_tag}
       </div>
+      <h2>{_h(t['title'])}</h2>
+      <p class="excerpt">{_h(t['concept'])}</p>
     </div>
-    <span class="toggle-icon">▼</span>
   </div>
-  <div class="team-body">
-    <div class="concept">{_h(team['concept'])}</div>
-    {images_html}
-    {pokemon_html}
-    {sel_html}
-  </div>
-</div>"""
-
-
-def generate_html(teams: list[dict]) -> str:
-    cards = "\n\n".join(_render_team(t, i) for i, t in enumerate(teams))
-    return f"""<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ポケモンチャンピオンズ 構築記録</title>
-  <style>{CSS}</style>
-</head>
-<body>
-<header>
-  <h1>ポケモンチャンピオンズ 構築記録</h1>
-  <p>構築済みパーティーの記録・共有サイト</p>
-</header>
-<main>
-{cards}
-</main>
-<footer>
-  <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-builds">GitHub</a></p>
-</footer>
-<script>
-function toggle(header) {{
-  header.closest('.team-card').classList.toggle('open');
-}}
-</script>
-</body>
-</html>"""
+</a>
+"""
+    body = f'<div class="post-list">\n{cards}</div>'
+    return _page_shell("トップ", body)
 
 
 # ---------------------------------------------------------------------------
@@ -408,7 +465,7 @@ def main():
     team_files = [f for f in team_files if f.name not in ("_TEMPLATE.md", "README.md")]
 
     if not team_files:
-        print("チームファイルが見つかりません: vs/teams/")
+        print("チームファイルが見つかりません: site/teams/")
         return
 
     teams = [parse_team(f) for f in team_files]
@@ -420,12 +477,24 @@ def main():
         bases[base].append(t)
     for group in bases.values():
         if len(group) > 1:
-            group[0]["is_latest"] = True  # sort 済みなので先頭が最新
+            group[0]["is_latest"] = True
 
-    html_content = generate_html(teams)
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(html_content, encoding="utf-8")
-    print(f"✅ {len(teams)} 件の構築を生成 → {OUTPUT}")
+    # 一覧ページ
+    index_html = generate_index(teams)
+    (OUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+
+    # 個別記事ページ
+    teams_out = OUT_DIR / "teams"
+    teams_out.mkdir(parents=True, exist_ok=True)
+    for i, t in enumerate(teams):
+        prev_t = teams[i - 1] if i > 0 else None
+        next_t = teams[i + 1] if i < len(teams) - 1 else None
+        article_html = generate_article(t, prev_t, next_t)
+        (teams_out / f"{t['filename']}.html").write_text(article_html, encoding="utf-8")
+
+    print(f"✅ {len(teams)} 件の構築を生成")
+    print(f"   一覧 → {OUT_DIR / 'index.html'}")
+    print(f"   記事 → {teams_out}/")
 
 
 if __name__ == "__main__":

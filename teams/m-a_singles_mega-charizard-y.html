@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メガリザードンY軸シングルバトル構築 — ポケモンチャンピオンズ 構築記録</title>
+  <style>:root{--bg:#f5f6fa;--surface:#fff;--card:#e8edf5;--accent:#e05070;--text:#2d3048;--text-muted:#6b7080;--border:#d8dce6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,#4a90d9,#e05070);padding:2.5rem 1rem 2rem;text-align:center;border-bottom:3px solid var(--accent);color:#fff}
+header h1{font-size:1.8rem;letter-spacing:.05em}header h1 a{color:#fff;text-decoration:none}
+header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
+main{max-width:900px;margin:2rem auto;padding:0 1rem}
+.breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--accent)}
+
+/* --- index cards --- */
+.post-list{display:flex;flex-direction:column;gap:1.5rem}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
+.post-sprites{display:flex;gap:.3rem;flex-shrink:0}
+.post-sprites img{width:40px;height:40px;object-fit:contain}
+.post-meta{flex:1;min-width:0}
+.post-meta h2{font-size:1.15rem;margin-bottom:.3rem;color:var(--text)}
+.post-meta .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.4rem}
+.post-meta .excerpt{font-size:.88rem;color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:.72rem;padding:.15rem .55rem;border-radius:999px;background:var(--accent);color:#fff;font-weight:600}
+.tag.doubles{background:#2d9d6a}.tag.singles{background:#4a90d9}.tag.reg{background:#7c6bc4}.tag.latest{background:#e0a020}
+
+/* --- article --- */
+.article-header{margin-bottom:1.5rem}
+.article-header h2{font-size:1.5rem;margin-bottom:.5rem}
+.article-header .tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.concept{background:var(--bg);border-left:4px solid var(--accent);padding:.8rem 1rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-muted)}
+.party-sprites{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.party-sprites img{width:56px;height:56px;object-fit:contain;background:var(--card);border-radius:8px;padding:4px}
+.pokemon-slot{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
+.pokemon-sprite{width:68px;height:68px;flex-shrink:0;border-radius:8px;background:var(--card);object-fit:contain}
+.pokemon-info{flex:1;min-width:0}
+.pokemon-slot h3{font-size:1rem;margin-bottom:.5rem;color:var(--accent)}
+.pokemon-slot table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:.6rem}
+.pokemon-slot th{text-align:left;padding:.25rem .5rem;color:var(--text-muted);width:80px;font-weight:normal}
+.pokemon-slot td{padding:.25rem .5rem}
+.moves{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem}
+.moves li{background:var(--card);padding:.2rem .7rem;border-radius:6px;font-size:.85rem}
+.pokemon-note{font-size:.85rem;color:var(--text-muted);margin-top:.4rem}
+.selection{margin-top:1.5rem}.selection h3{font-size:1.1rem;margin-bottom:.8rem}
+.sel-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin-bottom:.8rem}
+.sel-block h4{font-size:.95rem;color:var(--accent);margin-bottom:.3rem}
+.sel-block p,.sel-block ol{font-size:.9rem;color:var(--text-muted)}.sel-block ol{padding-left:1.2rem}
+.team-images{margin-bottom:1.5rem}
+.team-images h3{font-size:1rem;margin-bottom:.5rem}
+.team-images-grid{display:flex;flex-wrap:wrap;gap:.8rem}
+.team-images-grid img{max-width:100%;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .15s}
+.team-images-grid img:hover{transform:scale(1.02)}
+.team-images-grid a{display:block;flex:1;min-width:min(100%,280px)}
+.nav-links{display:flex;justify-content:space-between;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.9rem}
+.nav-links a{display:flex;align-items:center;gap:.3rem}
+footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
+footer a{color:var(--accent)}
+@media(max-width:600px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}</style>
+</head>
+<body>
+<header>
+  <h1><a href="../index.html">ポケモンチャンピオンズ 構築記録</a></h1>
+  <p>構築済みパーティーの記録・共有サイト</p>
+</header>
+<main>
+<div class="breadcrumb"><a href="../index.html">トップ</a> &gt; メガリザードンY軸シングルバトル構築</div>
+<div class="article-header">
+  <h2>メガリザードンY軸シングルバトル構築</h2>
+  <div class="tags">
+    <span class="tag reg">M-A</span>
+    <span class="tag singles">シングル</span>
+    
+  </div>
+</div>
+<div class="concept">カバルドンのステロ＋あくびで起点を作り、リザYで崩し、ミミッキュで〆る。リザ出せない対面はギャラドスの龍舞で全抜き。</div>
+<div class="party-sprites"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10035.png" alt="メガリザードンY" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/450.png" alt="カバルドン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="ギャラドス" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png" alt="ガブリアス" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10008.png" alt="ロトムW" loading="lazy"></div>
+
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10035.png" alt="メガリザードンY" loading="lazy">
+  <div class="pokemon-info">
+    <h3>① メガリザードンY（崩し）</h3>
+    <table><tr><th>特性</th><td>もうか → ひでり</td></tr><tr><th>性格</th><td>ひかえめ</td></tr><tr><th>努力値</th><td>C252 S252 H4</td></tr></table>
+    <ul class="moves"><li>かえんほうしゃ</li><li>ソーラービーム</li><li>エアスラッシュ</li><li>きあいだま</li><li>--</li></ul>
+    
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/450.png" alt="カバルドン" loading="lazy">
+  <div class="pokemon-info">
+    <h3>② カバルドン＠オボンのみ（起点作成）</h3>
+    <table><tr><th>特性</th><td>すなおこし</td></tr><tr><th>性格</th><td>わんぱく</td></tr><tr><th>努力値</th><td>H252 B252 D4</td></tr></table>
+    <ul class="moves"><li>ステルスロック</li><li>あくび</li><li>じしん</li><li>なまける</li></ul>
+    <p class="pokemon-note">シングルはステロが最強サポート - タスキ破壊 - リザ圏内作成 - 展開拒否</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy">
+  <div class="pokemon-info">
+    <h3>③ ミミッキュ＠のろいのおふだ（ストッパー）</h3>
+    <table><tr><th>特性</th><td>ばけのかわ</td></tr><tr><th>性格</th><td>いじっぱり</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>じゃれつく</li><li>かげうち</li><li>つるぎのまい</li><li>シャドークロー</li><li>--</li></ul>
+    
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="ギャラドス" loading="lazy">
+  <div class="pokemon-info">
+    <h3>④ ギャラドス＠ラムのみ（抜きエース）</h3>
+    <table><tr><th>特性</th><td>いかく</td></tr><tr><th>性格</th><td>いじっぱり</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>りゅうのまい</li><li>たきのぼり</li><li>こおりのキバ</li><li>じしん</li></ul>
+    <p class="pokemon-note">リザ出せない対面の勝ち筋</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png" alt="ガブリアス" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑤ ガブリアス＠きあいのタスキ（積みエース）</h3>
+    <table><tr><th>特性</th><td>さめはだ</td></tr><tr><th>性格</th><td>ようき</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>じしん</li><li>げきりん</li><li>ほのおのキバ</li><li>つるぎのまい</li></ul>
+    <p class="pokemon-note">電気無効＋高速物理。タスキで確実に1発耐え→剣舞→全抜き。持ち物プールが貧弱な環境でタスキ剣舞は最強格の勝ち筋。晴れ下ほのおのキバで鋼を焼く</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10008.png" alt="ロトムW" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑥ ロトムW＠たべのこし（クッション）</h3>
+    <table><tr><th>特性</th><td>ふゆう</td></tr><tr><th>性格</th><td>ずぶとい</td></tr><tr><th>努力値</th><td>H252 B252 D4</td></tr></table>
+    <ul class="moves"><li>ボルトチェンジ</li><li>ハイドロポンプ</li><li>おにび</li><li>まもる</li></ul>
+    <p class="pokemon-note">岩・水受け＋対面操作</p>
+  </div>
+</div>
+<div class="selection"><h3>選出テンプレ</h3>
+<div class="sel-block"><h4>▶ 基本</h4><p><strong>カバ＋リザ＋ミミ</strong><br>---</p><ol><li>ステロ</li><li>あくびループ</li><li>リザ着地</li><li>崩す</li><li>ミミで回収</li></ol></div>
+<div class="sel-block"><h4>▶ 対電気多め（リザ出せない）</h4><p><strong>ロトム＋ガブ＋ミミ</strong><br><br>- 鬼火で物理を止める<br>- ガブで電気無効＋剣舞から崩し<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対ステロ展開（リザ出せない）</h4><p><strong>カバ＋ガブ＋ミミ</strong><br><br>- ステロ等倍以下で固める<br>- カバあくびで起点→ガブ剣舞から崩し<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対天候上書き（リザ出せない）</h4><p><strong>ロトム＋ギャラ＋ミミ</strong><br><br>- いかく＋鬼火で物理を削ぐ<br>- ギャラ龍舞から全抜き<br>- 地面・格闘・炎が多い相手に有効<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対受け寄り</h4><p><strong>カバ＋リザ＋ガブ</strong><br><br>- ステロ＋晴れ炎牙ガブ<br><br>---</p></div>
+</div>
+<div class="nav-links"><div><a href="m-a_singles_mega-charizard-y_v2.html">← メガリザードンY軸シングルバトル構築 v2</a></div><div></div></div>
+</main>
+<footer>
+  <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-vs">GitHub</a></p>
+</footer>
+</body>
+</html>
