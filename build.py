@@ -265,7 +265,7 @@ main{max-width:900px;margin:2rem auto;padding:0 1rem}
 .social-links a:hover{background:rgba(255,255,255,.3);text-decoration:none}
 .social-links svg{width:16px;height:16px;fill:currentColor}
 .profile-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem;display:flex;gap:1.2rem;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.profile-avatar{width:72px;height:72px;border-radius:50%;background:var(--card);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.profile-avatar{width:72px;height:72px;border-radius:50%;background:var(--card);flex-shrink:0;object-fit:cover}
 .profile-body{flex:1;min-width:0}
 .profile-body .name{font-size:1.1rem;font-weight:700;margin-bottom:.3rem}
 .profile-body .bio{font-size:.88rem;color:var(--text-muted);margin-bottom:.5rem}
@@ -471,9 +471,9 @@ def generate_index(teams: list[dict]) -> str:
 </a>
 """
     profile = f"""<div class="profile-card">
-  <div class="profile-avatar">👤</div>
+  <img class="profile-avatar" src="https://github.com/KurutaSyuntaro.png" alt="kuruta" loading="lazy">
   <div class="profile-body">
-    <div class="name">kuruta</div>
+    <div class="name">來田春太郎（くるたしゅんたろう）</div>
     <div class="bio">ポケモン対戦が好きなエンジニア。MCPサーバーを自作してAIにパーティ構築を手伝わせたりしています。</div>
     <div class="profile-links">
       {''.join(f'<a href="{url}" target="_blank" rel="noopener">{icon}{name}</a>' for name, url, icon in SOCIAL_LINKS)}
