@@ -504,13 +504,8 @@ def generate_index(teams: list[dict]) -> str:
 # ---------------------------------------------------------------------------
 
 def _sort_key(path: Path) -> tuple:
-    """ダブル優先、同名は新バージョン優先"""
-    name = path.stem
-    m = re.search(r"_v(\d+)$", name)
-    version = int(m.group(1)) if m else 1
-    fmt_order = 0 if "doubles" in name else 1
-    base = re.sub(r"_v\d+$", "", name)
-    return (fmt_order, base, -version)
+    """更新日時の降順（最新が先頭）"""
+    return (-path.stat().st_mtime,)
 
 
 def main():
