@@ -19,10 +19,10 @@
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/715.png" width="68" alt="オンバーン">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/952.png" width="68" alt="スコヴィラン">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/952.png" width="68" alt="メガスコヴィラン">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/778.png" width="68" alt="ミミッキュ">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/903.png" width="68" alt="オオニューラ">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png" width="68" alt="ギャラドス">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png" width="68" alt="メガギャラドス">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/553.png" width="68" alt="ワルビアル">
 </p>
 
@@ -45,11 +45,11 @@
 
 ---
 
-### ② スコヴィラン＠メガストーン（メガ枠・両刀アタッカー）
+### ② メガスコヴィラン＠スコヴィランナイト（メガ枠・両刀アタッカー）
 
 | 項目 | 内容 |
 |------|------|
-| 特性 | ようりょくそ → （メガシンカ後の特性） |
+| 特性 | ようりょくそ → とびだすハバネロ |
 | 性格 | むじゃき（S↑ D↓） |
 | 努力値 | A252 S252 H4 |
 
@@ -102,11 +102,11 @@
 
 ---
 
-### ⑤ ギャラドス＠メガストーン（メガエース・全抜き）
+### ⑤ メガギャラドス＠ギャラドスナイト（メガエース・全抜き）
 
 | 項目 | 内容 |
 |------|------|
-| 特性 | いかく → （メガシンカ後：かたやぶり） |
+| 特性 | いかく → かたやぶり |
 | 性格 | ようき（S↑ C↓） |
 | 努力値 | A252 S252 H4 |
 
