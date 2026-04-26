@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メガギャラドス軸シングルバトル構築 — ポケモンチャンピオンズ 構築記録</title>
+  <style>:root{--bg:#f5f6fa;--surface:#fff;--card:#e8edf5;--accent:#e05070;--text:#2d3048;--text-muted:#6b7080;--border:#d8dce6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,#4a90d9,#e05070);padding:2.5rem 1rem 2rem;text-align:center;border-bottom:3px solid var(--accent);color:#fff}
+header h1{font-size:1.8rem;letter-spacing:.05em}header h1 a{color:#fff;text-decoration:none}
+header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
+main{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:2rem;align-items:start}
+.content{min-width:0}
+.sidebar{position:sticky;top:1.5rem}
+.breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--accent)}
+
+/* --- index cards --- */
+.post-list{display:flex;flex-direction:column;gap:1.5rem}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
+.post-sprites{display:flex;gap:.3rem;flex-shrink:0}
+.post-sprites img{width:40px;height:40px;object-fit:contain}
+.post-meta{flex:1;min-width:0}
+.post-meta h2{font-size:1.15rem;margin-bottom:.3rem;color:var(--text)}
+.post-meta .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.4rem}
+.post-meta .excerpt{font-size:.88rem;color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:.72rem;padding:.15rem .55rem;border-radius:999px;background:var(--accent);color:#fff;font-weight:600}
+.tag.doubles{background:#2d9d6a}.tag.singles{background:#4a90d9}.tag.reg{background:#7c6bc4}.tag.latest{background:#e0a020}
+
+/* --- article --- */
+.article-header{margin-bottom:1.5rem}
+.article-header h2{font-size:1.5rem;margin-bottom:.5rem}
+.article-header .tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.concept{background:var(--bg);border-left:4px solid var(--accent);padding:.8rem 1rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-muted)}
+.party-sprites{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.party-sprites img{width:56px;height:56px;object-fit:contain;background:var(--card);border-radius:8px;padding:4px}
+.pokemon-slot{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
+.pokemon-sprite{width:68px;height:68px;flex-shrink:0;border-radius:8px;background:var(--card);object-fit:contain}
+.pokemon-info{flex:1;min-width:0}
+.pokemon-slot h3{font-size:1rem;margin-bottom:.5rem;color:var(--accent)}
+.pokemon-slot table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:.6rem}
+.pokemon-slot th{text-align:left;padding:.25rem .5rem;color:var(--text-muted);width:80px;font-weight:normal}
+.pokemon-slot td{padding:.25rem .5rem}
+.moves{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem}
+.moves li{background:var(--card);padding:.2rem .7rem;border-radius:6px;font-size:.85rem}
+.pokemon-note{font-size:.85rem;color:var(--text-muted);margin-top:.4rem}
+.selection{margin-top:1.5rem}.selection h3{font-size:1.1rem;margin-bottom:.8rem}
+.sel-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin-bottom:.8rem}
+.sel-block h4{font-size:.95rem;color:var(--accent);margin-bottom:.3rem}
+.sel-block p,.sel-block ol{font-size:.9rem;color:var(--text-muted)}.sel-block ol{padding-left:1.2rem}
+.team-images{margin-bottom:1.5rem}
+.team-images h3{font-size:1rem;margin-bottom:.5rem}
+.team-images-grid{display:flex;flex-wrap:wrap;gap:.8rem}
+.team-images-grid img{max-width:100%;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .15s}
+.team-images-grid img:hover{transform:scale(1.02)}
+.team-images-grid a{display:block;flex:1;min-width:min(100%,280px)}
+.nav-links{display:flex;justify-content:space-between;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.9rem}
+.nav-links a{display:flex;align-items:center;gap:.3rem}
+.social-links{display:flex;justify-content:center;gap:1rem;margin-top:.8rem}
+.social-links a{color:rgba(255,255,255,.9);font-size:.85rem;display:flex;align-items:center;gap:.3rem;padding:.3rem .7rem;border-radius:999px;background:rgba(255,255,255,.15);transition:background .15s;text-decoration:none}
+.social-links a:hover{background:rgba(255,255,255,.3);text-decoration:none}
+.social-links svg{width:16px;height:16px;fill:currentColor}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;text-align:center;gap:.8rem}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--card);object-fit:cover}
+.profile-body{min-width:0}
+.profile-body .name{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.profile-body .bio{font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem}
+.profile-links{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
+.profile-links a:hover{background:var(--border);text-decoration:none}
+.profile-links svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
+footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
+footer a{color:var(--accent)}
+@media(max-width:768px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}</style>
+</head>
+<body>
+<header>
+  <h1><a href="../index.html">ポケモンチャンピオンズ 構築記録</a></h1>
+  <p>構築済みパーティーの記録・共有サイト</p>
+  <div class="social-links">
+    <a href="https://x.com/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><a href="https://www.youtube.com/channel/UCKtkqYAP5NbS6oTmI3BazFg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg>YouTube</a><a href="https://qiita.com/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.4a9.6 9.6 0 1 1 0 19.2 9.6 9.6 0 0 1 0-19.2zm-.96 4.32a5.28 5.28 0 1 0 0 10.56 5.28 5.28 0 0 0 0-10.56zm5.04.72 1.68 1.68-2.4 2.4-1.68-1.68z"/></svg>Qiita</a><a href="https://github.com/KurutaSyuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a><a href="https://zenn.dev/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.264 23.771h4.984c.264 0 .498-.147.645-.352L19.614.874c.176-.293-.029-.645-.381-.645h-4.72c-.235 0-.44.117-.587.323L.03 23.361c-.088.176.029.41.234.41zM17.445 23.419l6.479-10.408c.176-.293-.029-.645-.381-.645h-4.72c-.235 0-.44.117-.586.323l-6.479 10.408c-.176.293.029.645.381.645h4.72c.234 0 .44-.117.586-.323z"/></svg>Zenn</a>
+  </div>
+</header>
+<main>
+<div class="breadcrumb"><a href="../index.html">トップ</a> &gt; メガギャラドス軸シングルバトル構築</div>
+<div class="article-header">
+  <h2>メガギャラドス軸シングルバトル構築</h2>
+  <div class="tags">
+    <span class="tag reg">M-A</span>
+    <span class="tag singles">シングル</span>
+    
+  </div>
+</div>
+<div class="concept">メガギャラドス（りゅうのまい）をエースに据え、しろいハーブオンバーンの高速偵察＋先発崩しで有利対面を作る攻撃的構築。メガスコヴィランの草/炎の範囲で鋼・水を突破し、ミミッキュ・オオニューラの高速先制で詰める。スカーフワルビアルの奇襲で上から制圧する裏ルートも。メガ枠2体の使い分けで選出の柔軟性を確保。</div>
+<div class="party-sprites"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/715.png" alt="オンバーン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/952.png" alt="スコヴィラン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png" alt="オオニューラ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="ギャラドス" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/553.png" alt="ワルビアル" loading="lazy"></div>
+
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/715.png" alt="オンバーン" loading="lazy">
+  <div class="pokemon-info">
+    <h3>① オンバーン＠しろいハーブ（先発偵察＋崩し）</h3>
+    <table><tr><th>特性</th><td>おみとおし</td></tr><tr><th>性格</th><td>おくびょう（S↑ A↓）</td></tr><tr><th>努力値</th><td>C252 S252 H4</td></tr></table>
+    <ul class="moves"><li>りゅうせいぐん</li><li>ぼうふう</li><li>かえんほうしゃ</li><li>とんぼがえり</li></ul>
+    <p class="pokemon-note">構築の先発要員。おみとおしで相手の持ち物を確認し、選出意図を把握する。しろいハーブりゅうせいぐんでCダウンを1回帳消しにできるため、初手から高火力を押しつけて退場 or とんぼがえりで有利対面を作る。S123族で大半の相手の上を取れる。氷4倍弱点に注意</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/952.png" alt="スコヴィラン" loading="lazy">
+  <div class="pokemon-info">
+    <h3>② スコヴィラン＠メガストーン（メガ枠・両刀アタッカー）</h3>
+    <table><tr><th>特性</th><td>ようりょくそ → （メガシンカ後の特性）</td></tr><tr><th>性格</th><td>むじゃき（S↑ D↓）</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>フレアドライブ</li><li>パワーウィップ</li><li>かみくだく</li><li>まもる</li></ul>
+    <p class="pokemon-note">第2のメガ枠。草/炎の攻撃範囲でエアームドなどの鋼タイプやみず/じめん複合を広く突破できる。ギャラドスとメガ枠を使い分けることで、相手のメガ読みを外させる。まもるでメガシンカターンの安全確保やスカーフ判定に使える。素のSは75と控えめなため、メガシンカ後のS上昇に期待</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy">
+  <div class="pokemon-info">
+    <h3>③ ミミッキュ＠せいれいプレート（ストッパー＋積みエース）</h3>
+    <table><tr><th>特性</th><td>ばけのかわ</td></tr><tr><th>性格</th><td>ようき（S↑ C↓）</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>じゃれつく</li><li>シャドークロー</li><li>つるぎのまい</li><li>かげうち</li></ul>
+    <p class="pokemon-note">ばけのかわで行動保証付きのストッパー兼詰めエース。せいれいプレートでじゃれつくの火力を1.2倍に底上げし、剣舞後のフェアリー技で確定ラインを引き上げる。ドラゴン無効でオンバーンやワルビアルが苦手なドラゴンへの安全な引き先。かげうちで先制技による掃除も可能</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png" alt="オオニューラ" loading="lazy">
+  <div class="pokemon-info">
+    <h3>④ オオニューラ＠オボンのみ（高速物理＋毒打点）</h3>
+    <table><tr><th>特性</th><td>プレッシャー</td></tr><tr><th>性格</th><td>ようき（S↑ C↓）</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>インファイト</li><li>どくづき</li><li>つばめがえし</li><li>ちょうはつ</li></ul>
+    <p class="pokemon-note">A130/S120の高速物理アタッカー。どくづきでフェアリー（ミミッキュ・ニンフィア等）を処理し、チームの弱点を補う。インファイトで鋼・ノーマルに高打点。ちょうはつで受けポケモンの回復・積みを封じる崩し枠。オボンのみで耐久を補い、行動回数を1回稼ぐ。エスパー4倍弱点はワルビアル（エスパー無効）でカバー</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="ギャラドス" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑤ ギャラドス＠メガストーン（メガエース・全抜き）</h3>
+    <table><tr><th>特性</th><td>いかく → （メガシンカ後：かたやぶり）</td></tr><tr><th>性格</th><td>ようき（S↑ C↓）</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>たきのぼり</li><li>かみくだく</li><li>りゅうのまい</li><li>じしん</li></ul>
+    <p class="pokemon-note">構築のメインエース。メガシンカ前のいかくで物理相手のAを下げてりゅうのまいの起点を作り、メガシンカ後はかたやぶりでふゆう・がんじょう等を無視して全抜きを狙う。たきのぼりの怯み＋りゅうのまいのS上昇で制圧力が高い。じしんで電気タイプにも打点を持てる。電気4倍弱点はオンバーン・ワルビアル（じめん無効/無効）でカバー</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/553.png" alt="ワルビアル" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑥ ワルビアル＠こだわりスカーフ（スカーフ奇襲＋対エスパー）</h3>
+    <table><tr><th>特性</th><td>いかく</td></tr><tr><th>性格</th><td>ようき（S↑ C↓）</td></tr><tr><th>努力値</th><td>A252 S252 H4</td></tr></table>
+    <ul class="moves"><li>じしん</li><li>はたきおとす</li><li>ストーンエッジ</li><li>とんぼがえり</li></ul>
+    <p class="pokemon-note">スカーフS92→実質S138で上から制圧する奇襲枠。エスパー無効＋でんき無効で、オオニューラとギャラドスの弱点を受ける。いかくでサイクル内の物理火力を下げつつ、はたきおとすで相手の持ち物を落として盤面有利を取る。とんぼがえりで対面操作も可能</p>
+  </div>
+</div>
+<div class="selection"><h3>選出テンプレ</h3>
+<div class="sel-block"><h4>▶ 基本（メガギャラドス軸）</h4><p><strong>オンバーン＋ギャラドス（メガ）＋ミミッキュ</strong><br>---</p><ol><li>オンバーン先発でおみとおし＋しろいハーブりゅうせいぐんで削り</li><li>とんぼがえりでギャラドスへ。いかくでA下げ→メガシンカ→りゅうのまい</li><li>ギャラドスが止まったらミミッキュで剣舞→かげうちで〆</li></ol></div>
+<div class="sel-block"><h4>▶ 対 鋼・水タイプ多め（メガスコヴィラン軸）</h4><p><strong>スコヴィラン（メガ）＋オオニューラ＋ワルビアル</strong><br><br>- メガスコヴィランの草/炎でエアームド・水タイプを処理<br>- オオニューラのインファイトで鋼・ノーマル<br>- スカーフワルビアルで上から〆<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対面重視</h4><p><strong>ワルビアル（スカーフ先発）＋ギャラドス（メガ）＋ミミッキュ</strong><br><br>- スカーフワルビアルで初手奇襲、はたきおとすで持ち物除去<br>- 不利ならとんぼがえりでギャラドスを安全着地<br>- ミミッキュで最後の詰め<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対 受けループ・耐久パ</h4><p><strong>オオニューラ＋ミミッキュ＋ギャラドス（メガ）</strong><br><br>- オオニューラのちょうはつで回復封じ<br>- ミミッキュ剣舞→じゃれつく(せいれいプレート)で崩し<br>- メガギャラドスのかたやぶりでがんじょう等を無視して全抜き<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 対 フェアリー多め</h4><p><strong>オオニューラ＋スコヴィラン（メガ）＋ワルビアル</strong><br><br>- どくづきでフェアリーを処理<br>- メガスコヴィランのフェアリー半減で安全に動く<br>- ワルビアルのはたきおとすで削り<br><br>---</p></div>
+</div>
+<div class="nav-links"><div></div><div><a href="m-a_singles_infernape.html">ゴウカザル軸シングルバトル構築 →</a></div></div>
+</main>
+<footer>
+  <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-vs">GitHub</a></p>
+</footer>
+</body>
+</html>
