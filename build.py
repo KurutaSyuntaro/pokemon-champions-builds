@@ -241,6 +241,9 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .post-list{display:flex;flex-direction:column;gap:1.5rem}
 .post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
 .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.tool-card{background:linear-gradient(135deg,#fff3e8,#fff);border:1px solid #ffd3a6}
+.tool-card .post-meta h2{color:#b85a00}
+.tool-card .tag.tool{background:#b85a00}
 .post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
 .post-sprites{display:flex;gap:.3rem;flex-shrink:0}
 .post-sprites img{width:40px;height:40px;object-fit:contain}
@@ -302,6 +305,7 @@ footer a{color:var(--accent)}
 SITE_TITLE = "ポケモンチャンピオンズ 構築記録"
 SITE_DESC = "構築済みパーティーの記録・共有サイト"
 GITHUB_URL = "https://github.com/KurutaSyuntaro/pokemon-champions-vs"
+CALC_STATS_URL = "https://kurutasyuntaro.github.io/pokemon-calc-stats/"
 
 SOCIAL_LINKS = [
     ("X", "https://x.com/kuruta_syuntaro",
@@ -498,7 +502,8 @@ def generate_index(teams: list[dict]) -> str:
     <div class="name">來田春太郎（くるたしゅんたろう）</div>
     <div class="bio">ポケモン対戦が好きなエンジニア。MCPサーバーを自作してAIにパーティ構築を手伝わせたりしています。</div>
     <div class="profile-links">
-      {''.join(f'<a href="{url}" target="_blank" rel="noopener">{icon}{name}</a>' for name, url, icon in SOCIAL_LINKS)}
+            {''.join(f'<a href="{url}" target="_blank" rel="noopener">{icon}{name}</a>' for name, url, icon in SOCIAL_LINKS)}
+            <a href="{CALC_STATS_URL}" target="_blank" rel="noopener">ステータス計算機</a>
     </div>
   </div>
 </div>"""
