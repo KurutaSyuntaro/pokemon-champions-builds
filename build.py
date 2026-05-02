@@ -296,6 +296,12 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
 .profile-links a:hover{background:var(--border);text-decoration:none}
 .profile-links svg{width:14px;height:14px;fill:currentColor}
+.tool-panel{margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tool-panel .label{font-size:.72rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;margin-bottom:.4rem}
+.tool-panel .title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+.tool-panel .desc{font-size:.82rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
+.tool-panel .cta{display:inline-flex;align-items:center;justify-content:center;padding:.45rem .9rem;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:.82rem;font-weight:700}
+.tool-panel .cta:hover{filter:brightness(.95);text-decoration:none}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
 footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
 footer a{color:var(--accent)}
@@ -496,18 +502,23 @@ def generate_index(teams: list[dict]) -> str:
   </div>
 </a>
 """
-    profile = f"""<div class="profile-card">
+        profile = f"""<div class="profile-card">
   <img class="profile-avatar" src="https://github.com/KurutaSyuntaro.png" alt="kuruta" loading="lazy">
   <div class="profile-body">
     <div class="name">來田春太郎（くるたしゅんたろう）</div>
     <div class="bio">ポケモン対戦が好きなエンジニア。MCPサーバーを自作してAIにパーティ構築を手伝わせたりしています。</div>
     <div class="profile-links">
             {''.join(f'<a href="{url}" target="_blank" rel="noopener">{icon}{name}</a>' for name, url, icon in SOCIAL_LINKS)}
-            <a href="{CALC_STATS_URL}" target="_blank" rel="noopener">ステータス計算機</a>
     </div>
   </div>
 </div>"""
-    body = f'<div class="layout">\n<div class="content">\n<div class="post-list">\n{cards}</div>\n</div>\n<aside class="sidebar">\n{profile}\n</aside>\n</div>'
+        tool_panel = f"""<div class="tool-panel">
+    <div class="label">TOOLS</div>
+    <div class="title">ステータス計算機</div>
+    <div class="desc">チャンピオンズ形式と本家SV Lv50に対応した独立ツール。</div>
+    <a class="cta" href="{CALC_STATS_URL}" target="_blank" rel="noopener">開く</a>
+</div>"""
+        body = f'<div class="layout">\n<div class="content">\n<div class="post-list">\n{cards}</div>\n</div>\n<aside class="sidebar">\n{profile}\n{tool_panel}\n</aside>\n</div>'
     return _page_shell("トップ", body)
 
 
