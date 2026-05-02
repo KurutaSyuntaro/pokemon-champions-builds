@@ -22,6 +22,9 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .post-list{display:flex;flex-direction:column;gap:1.5rem}
 .post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
 .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.tool-card{background:linear-gradient(135deg,#fff3e8,#fff);border:1px solid #ffd3a6}
+.tool-card .post-meta h2{color:#b85a00}
+.tool-card .tag.tool{background:#b85a00}
 .post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
 .post-sprites{display:flex;gap:.3rem;flex-shrink:0}
 .post-sprites img{width:40px;height:40px;object-fit:contain}
@@ -91,6 +94,18 @@ footer a{color:var(--accent)}
 <div class="layout">
 <div class="content">
 <div class="post-list">
+<a class="post-card tool-card" href="https://kurutasyuntaro.github.io/pokemon-calc-stats/" target="_blank" rel="noopener">
+  <div class="post-card-inner">
+    <div class="post-sprites"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="リザードン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png" alt="ガブリアス" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy"></div>
+    <div class="post-meta">
+      <div class="tags">
+        <span class="tag tool">TOOL</span>
+      </div>
+      <h2>独立版 ステータス計算機</h2>
+      <p class="excerpt">別リポジトリで管理しているステータス計算機。チャンピオンズ形式と本家SV Lv50の両方に対応し、URL共有にも対応予定。</p>
+    </div>
+  </div>
+</a>
 <a class="post-card" href="teams/m-a_singles_mega-gyarados.html">
   <div class="post-card-inner">
     <div class="post-sprites"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/715.png" alt="オンバーン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/952.png" alt="メガスコヴィラン" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png" alt="ミミッキュ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png" alt="オオニューラ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10041.png" alt="メガギャラドス" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/553.png" alt="ワルビアル" loading="lazy"></div>
