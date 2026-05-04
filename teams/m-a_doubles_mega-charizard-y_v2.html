@@ -22,6 +22,9 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .post-list{display:flex;flex-direction:column;gap:1.5rem}
 .post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
 .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.tool-card{background:linear-gradient(135deg,#fff3e8,#fff);border:1px solid #ffd3a6}
+.tool-card .post-meta h2{color:#b85a00}
+.tool-card .tag.tool{background:#b85a00}
 .post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
 .post-sprites{display:flex;gap:.3rem;flex-shrink:0}
 .post-sprites img{width:40px;height:40px;object-fit:contain}
@@ -74,6 +77,12 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
 .profile-links a:hover{background:var(--border);text-decoration:none}
 .profile-links svg{width:14px;height:14px;fill:currentColor}
+.tool-panel{margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tool-panel .label{font-size:.72rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;margin-bottom:.4rem}
+.tool-panel .title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+.tool-panel .desc{font-size:.82rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
+.tool-panel .cta{display:inline-flex;align-items:center;justify-content:center;padding:.45rem .9rem;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:.82rem;font-weight:700}
+.tool-panel .cta:hover{filter:brightness(.95);text-decoration:none}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
 footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
 footer a{color:var(--accent)}
@@ -161,7 +170,7 @@ footer a{color:var(--accent)}
 <div class="sel-block"><h4>▶ 対トリル始動</h4><p>&gt; ⚠ リザ初手NG<br><br>| 先発 | 後発 |<br>|------|------|<br>| プテラ＋ガオガエン | リザY＋ヤレユータン |<br><br><strong>パターンA：ちょうはつで止める</strong><br><br>- プテラ ちょうはつ（S150でほぼ確実に先手）<br>- ねこだまし（トリル始動役の相方を止める）<br><br><strong>パターンB：トリルを通された場合</strong><br><br>- ヤレユータン投入 → トリル返し（上書き）<br>- メンタルハーブでちょうはつされても1回は撃てる<br>- トリル返した後はさいはい＋熱風で制圧<br><br>&gt; v1はギルガルドのキングシールド＋S60で枯らす方針だったが、v2はちょうはつ（S150）で止めるか、通されたらトリル返しで対処。<br><br>---</p></div>
 <div class="sel-block"><h4>▶ さいはい全力（相手が受け寄り）</h4><p>| 先発 | 後発 |<br>|------|------|<br>| ガオガエン＋ヤレユータン | リザY＋ガブ |<br><br><strong>1T：</strong><br><br>- ねこだまし＋まもる（安全にターンを稼ぐ）<br><br><strong>2T：</strong><br><br>- とんぼがえり → リザ着地（ひでり発動）<br>- さいはい → リザ ねっぷう（着地ターンから即2発）<br><br>&gt; 追い風なしでもさいはい熱風2連射で受けを崩す選出。<br><br>---</p></div>
 </div>
-<div class="nav-links"><div><a href="m-a_singles_infernape.html">← ゴウカザル軸シングルバトル構築</a></div><div><a href="m-a_singles_mega-charizard-y_v2.html">メガリザードンY軸シングルバトル構築 v2 →</a></div></div>
+<div class="nav-links"><div><a href="m-a_singles_infernape.html">← ゴウカザル軸シングルバトル構築</a></div><div><a href="m-a_doubles_mega-charizard-y.html">メガリザードンY軸ダブルバトル構築 →</a></div></div>
 </main>
 <footer>
   <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-vs">GitHub</a></p>

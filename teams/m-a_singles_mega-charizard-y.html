@@ -22,6 +22,9 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .post-list{display:flex;flex-direction:column;gap:1.5rem}
 .post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
 .post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.tool-card{background:linear-gradient(135deg,#fff3e8,#fff);border:1px solid #ffd3a6}
+.tool-card .post-meta h2{color:#b85a00}
+.tool-card .tag.tool{background:#b85a00}
 .post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
 .post-sprites{display:flex;gap:.3rem;flex-shrink:0}
 .post-sprites img{width:40px;height:40px;object-fit:contain}
@@ -74,6 +77,12 @@ main{max-width:1100px;margin:2rem auto;padding:0 1rem}
 .profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
 .profile-links a:hover{background:var(--border);text-decoration:none}
 .profile-links svg{width:14px;height:14px;fill:currentColor}
+.tool-panel{margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tool-panel .label{font-size:.72rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;margin-bottom:.4rem}
+.tool-panel .title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+.tool-panel .desc{font-size:.82rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
+.tool-panel .cta{display:inline-flex;align-items:center;justify-content:center;padding:.45rem .9rem;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:.82rem;font-weight:700}
+.tool-panel .cta:hover{filter:brightness(.95);text-decoration:none}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
 footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
 footer a{color:var(--accent)}
@@ -94,7 +103,7 @@ footer a{color:var(--accent)}
   <div class="tags">
     <span class="tag reg">M-A</span>
     <span class="tag singles">シングル</span>
-    
+    <span class="tag latest">最新</span>
   </div>
 </div>
 <div class="concept">カバルドンのステロ＋あくびで起点を作り、リザYで崩し、ミミッキュで〆る。リザ出せない対面はギャラドスの龍舞で全抜き。</div>
@@ -161,7 +170,7 @@ footer a{color:var(--accent)}
 <div class="sel-block"><h4>▶ 対天候上書き（リザ出せない）</h4><p><strong>ロトム＋ギャラ＋ミミ</strong><br><br>- いかく＋鬼火で物理を削ぐ<br>- ギャラ龍舞から全抜き<br>- 地面・格闘・炎が多い相手に有効<br><br>---</p></div>
 <div class="sel-block"><h4>▶ 対受け寄り</h4><p><strong>カバ＋リザ＋ガブ</strong><br><br>- ステロ＋晴れ炎牙ガブ<br><br>---</p></div>
 </div>
-<div class="nav-links"><div><a href="m-a_singles_mega-charizard-y_v2.html">← メガリザードンY軸シングルバトル構築 v2</a></div><div><a href="m-a_doubles_mega-charizard-y.html">メガリザードンY軸ダブルバトル構築 →</a></div></div>
+<div class="nav-links"><div><a href="m-a_doubles_mega-charizard-y.html">← メガリザードンY軸ダブルバトル構築</a></div><div><a href="m-a_singles_mega-charizard-y_v2.html">メガリザードンY軸シングルバトル構築 v2 →</a></div></div>
 </main>
 <footer>
   <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-vs">GitHub</a></p>
