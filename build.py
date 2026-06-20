@@ -384,7 +384,8 @@ def _render_pokemon(p: dict) -> str:
     moves_html = "".join(f"<li>{_h(m)}</li>" for m in p["moves"])
     note_html = ""
     if p["note"]:
-        note_html = f'<p class="pokemon-note">{_h(p["note"])}</p>'
+        note_text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", _h(p["note"]))
+        note_html = f'<p class="pokemon-note">{note_text}</p>'
     return f"""<div class="pokemon-slot">
   {sprite_html}
   <div class="pokemon-info">
@@ -465,6 +466,8 @@ def generate_article(team: dict, prev_team: dict | None, next_team: dict | None)
         nav_next = f'<a href="{_h(next_team["filename"])}.html">{_h(next_team["title"])} →</a>'
     nav_html = f'<div class="nav-links"><div>{nav_prev}</div><div>{nav_next}</div></div>'
 
+    concept_text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", _h(team['concept']))
+
     body = f"""<div class="breadcrumb"><a href="../index.html">トップ</a> &gt; {_h(team['title'])}</div>
 <div class="article-header">
   <h2>{_h(team['title'])}</h2>
@@ -474,7 +477,7 @@ def generate_article(team: dict, prev_team: dict | None, next_team: dict | None)
     {latest_tag}
   </div>
 </div>
-<div class="concept">{_h(team['concept'])}</div>
+<div class="concept">{concept_text}</div>
 {sprites_html}
 {images_html}
 {pokemon_html}
