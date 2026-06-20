@@ -19,7 +19,7 @@
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/715.png" width="68" alt="オンバーン">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/952.png" width="68" alt="メガスコヴィラン">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10320.png" width="68" alt="メガスコヴィラン">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/778.png" width="68" alt="ミミッキュ">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/903.png" width="68" alt="オオニューラ">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png" width="68" alt="メガギャラドス">
