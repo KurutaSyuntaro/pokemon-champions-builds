@@ -13,9 +13,16 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-TEAMS_DIR = ROOT / "site" / "teams"
-OUT_DIR = ROOT / "site"
+_SCRIPT = Path(__file__).resolve()
+# デプロイ先リポジトリでは teams/ が build.py の隣にある
+if (_SCRIPT.parent / "teams").exists():
+    TEAMS_DIR = _SCRIPT.parent / "teams"
+    OUT_DIR = _SCRIPT.parent
+else:
+    # ローカル開発: site/ 以下の構造
+    ROOT = _SCRIPT.parent.parent
+    TEAMS_DIR = ROOT / "site" / "teams"
+    OUT_DIR = ROOT / "site"
 
 # ---------------------------------------------------------------------------
 # ポケモン日本語名 → PokeAPI スプライト ID
