@@ -132,6 +132,10 @@ def parse_team(path: Path) -> dict:
     if m:
         team["regulation"] = m.group(1).strip()
 
+    # ステータス
+    m = re.search(r"\*\*ステータス\*\*:\s*(.+)", text)
+    team["is_latest"] = bool(m and m.group(1).strip() == "使用中")
+
     # コンセプト
     m = re.search(r"## コンセプト\s*\n+>\s*(.+?)(?:\n\n|\n---|\n## )", text, re.DOTALL)
     if m:
@@ -553,13 +557,13 @@ def main():
 
     teams = [parse_team(f) for f in team_files]
 
-    # 同名ベースで複数バージョンがある場合、最新に「最新」タグ
+    # 同名ベースで複数バージョンがある場合、最新に「最新」タグ（is_latest 未記載のファイルのみ）
     bases: dict[str, list[dict]] = defaultdict(list)
     for t in teams:
         base = re.sub(r"_v\d+$", "", t["filename"])
         bases[base].append(t)
     for group in bases.values():
-        if len(group) > 1:
+        if len(group) > 1 and not any(t["is_latest"] for t in group):
             group[0]["is_latest"] = True
 
     # 一覧ページ
