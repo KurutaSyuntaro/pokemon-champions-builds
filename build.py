@@ -10,7 +10,6 @@ site/teams/ に新しい構築ファイルを追加したら再実行でサイ�
 
 import html
 import re
-from collections import defaultdict
 from pathlib import Path
 
 _SCRIPT = Path(__file__).resolve()
@@ -556,15 +555,6 @@ def main():
         return
 
     teams = [parse_team(f) for f in team_files]
-
-    # 同名ベースで複数バージョンがある場合、最新に「最新」タグ（is_latest 未記載のファイルのみ）
-    bases: dict[str, list[dict]] = defaultdict(list)
-    for t in teams:
-        base = re.sub(r"_v\d+$", "", t["filename"])
-        bases[base].append(t)
-    for group in bases.values():
-        if len(group) > 1 and not any(t["is_latest"] for t in group):
-            group[0]["is_latest"] = True
 
     # 一覧ページ
     index_html = generate_index(teams)
