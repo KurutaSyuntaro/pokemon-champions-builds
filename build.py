@@ -317,7 +317,7 @@ footer a{color:var(--accent)}
 
 SITE_TITLE = "ポケモンチャンピオンズ 構築記録"
 SITE_DESC = "構築済みパーティーの記録・共有サイト"
-GITHUB_URL = "https://github.com/KurutaSyuntaro/pokemon-champions-vs"
+GITHUB_URL = "https://github.com/KurutaSyuntaro/pokemon-champions-builds"
 CALC_STATS_URL = "https://kurutasyuntaro.github.io/pokemon-calc-stats/"
 
 SOCIAL_LINKS = [
