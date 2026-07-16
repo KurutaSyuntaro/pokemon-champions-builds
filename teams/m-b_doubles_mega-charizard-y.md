@@ -24,7 +24,7 @@
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/547.png" width="68" alt="エルフーン">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png" width="68" alt="ガブリアス">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/902.png" width="68" alt="イダイトウ">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/983.png" width="68" alt="キョジオーン">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/983.png" width="68" alt="ドドゲザン">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/700.png" width="68" alt="ニンフィア">
 </p>
 
@@ -91,7 +91,7 @@
 - いわなだれ ← **飛行・虫・炎への全体技**
 - ドラゴンクロー ← **単体ドラゴン打点**
 
-> ニックネーム「すなさめ」（砂鮫）。高火力物理アタッカー。じしんの全体技で複数体を一気に削る。
+> 高火力物理アタッカー。じしんの全体技で複数体を一気に削る。
 > いわなだれは追い風下でひるみも狙える。味方へのじしんダメージに注意。
 
 ---
@@ -103,7 +103,7 @@
 | 性別 | ♂ |
 | 特性 | てきおうりょく |
 | 性格 | いじっぱり |
-| 努力値 | H2 A32 D2 |
+| 努力値 | H2 A32 S32 |
 | 実数値 | H197 A180 B85 C90 D95 S130 |
 
 **技構成**
@@ -118,7 +118,7 @@
 
 ---
 
-### ⑤ キングガンビット（Kingambit）＠くろいメガネ（詰めアタッカー）
+### ⑤ ドドゲザン＠くろいメガネ（詰めアタッカー）
 
 | 項目 | 内容 |
 |------|------|
@@ -171,10 +171,10 @@
 エルフーンがおいかぜを張り、リザードンYのねっぷうで制圧。ガブリアス・イダイトウで後続を処理。
 
 ### 対トリル・積み構築
-- 先発：**エルフーン ＋ キングガンビット**
+- 先発：**エルフーン ＋ ドドゲザン**
 - 後発：**リザードンY ＋ ニンフィア**
 
-エルフーンのいたずらごころアンコールでトリルを封じ、キングガンビットのまけんきを活かして後半詰める。
+エルフーンのいたずらごころアンコールでトリルを封じ、ドドゲザンのまけんきを活かして後半詰める。
 
 ---
 
@@ -182,4 +182,4 @@
 
 - エルフーン→リザードンYの晴れ＋追い風起動が理想ムーブ
 - ガブリアスのじしんはリザードンYに当たらない（ひこうタイプ）ため同時選出可能
-- キングガンビットはいかく展開が多い構築への回答として後発から投げる
+- ドドゲザンはいかく展開が多い構築への回答として後発から投げる
