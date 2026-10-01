@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PokeAPI スプライト検索</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    input,
+    button {
+      box-sizing: border-box;
+      min-height: 42px;
+      padding: 8px 12px;
+      font: inherit;
+    }
+
+    input {
+      flex: 1 1 240px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #status {
+      min-height: 1.5em;
+      margin-bottom: 16px;
+    }
+
+    #catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    article {
+      display: grid;
+      gap: 5px;
+      padding: 12px;
+      border: 1px solid #999;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    article img {
+      width: 130px;
+      height: 130px;
+      margin: auto;
+      object-fit: contain;
+    }
+
+    article strong {
+      font-size: 1.1rem;
+    }
+
+    article small {
+      color: #777;
+      overflow-wrap: anywhere;
+    }
+
+    .error {
+      color: #d33;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      article small {
+        color: #aaa;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>PokeAPI スプライト検索</h1>
+  <p>IDか範囲を入力してください。例: <code>10030</code> / <code>10300-10320</code></p>
+
+  <form id="search-form">
+    <input
+      id="id-range"
+      type="text"
+      value="10020-10040"
+      inputmode="numeric"
+      autocomplete="off"
+      aria-label="スプライトIDまたは範囲"
+    >
+    <button type="submit">表示</button>
+  </form>
+
+  <div id="status" role="status"></div>
+  <main id="catalog"></main>
+
+  <script>
+    const API_URL = "https://pokeapi.co/api/v2";
+    const ARTWORK_URL =
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork";
+    const SPRITE_URL =
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
+    const MAX_IDS = 100;
+    const form = document.querySelector("#search-form");
+    const input = document.querySelector("#id-range");
+    const status = document.querySelector("#status");
+    const catalog = document.querySelector("#catalog");
+    const jsonCache = new Map();
+
+    function parseIds(value) {
+      const match = value.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+      if (!match) {
+        throw new Error("「10030」または「10300-10320」の形式で入力してください。");
+      }
+
+      const start = Number(match[1]);
+      const end = Number(match[2] ?? match[1]);
+      if (start > end) {
+        throw new Error("範囲の開始IDは終了ID以下にしてください。");
+      }
+      if (end - start + 1 > MAX_IDS) {
+        throw new Error(`一度に表示できるのは${MAX_IDS}件までです。`);
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+    }
+
+    async function getJson(url) {
+      if (!jsonCache.has(url)) {
+        jsonCache.set(url, fetch(url).then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          return response.json();
+        }));
+      }
+      return jsonCache.get(url);
+    }
+
+    function localizedName(entries, language) {
+      return entries.find((entry) => entry.language.name === language)?.name ?? "";
+    }
+
+    async function getPokemon(id) {
+      const pokemon = await getJson(`${API_URL}/pokemon/${id}`);
+      const species = await getJson(pokemon.species.url);
+      let japaneseName = localizedName(species.names, "ja") || pokemon.name;
+
+      if (pokemon.forms.length > 0) {
+        const pokemonForm = await getJson(pokemon.forms[0].url);
+        const suffix = localizedName(pokemonForm.form_names, "ja");
+        if (suffix && !japaneseName.includes(suffix)) {
+          japaneseName += `（${suffix}）`;
+        }
+      }
+
+      return {
+        id: pokemon.id,
+        englishName: pokemon.name,
+        japaneseName,
+      };
+    }
+
+    function createCard(pokemon) {
+      const card = document.createElement("article");
+      const image = document.createElement("img");
+      const id = document.createElement("strong");
+      const japaneseName = document.createElement("span");
+      const englishName = document.createElement("small");
+
+      image.src = `${ARTWORK_URL}/${pokemon.id}.png`;
+      image.alt = pokemon.japaneseName;
+      image.loading = "lazy";
+      image.addEventListener("error", () => {
+        if (image.dataset.fallback) {
+          image.hidden = true;
+          return;
+        }
+        image.dataset.fallback = "true";
+        image.src = `${SPRITE_URL}/${pokemon.id}.png`;
+      });
+      id.textContent = pokemon.id;
+      japaneseName.textContent = pokemon.japaneseName;
+      englishName.textContent = pokemon.englishName;
+
+      card.append(image, id, japaneseName, englishName);
+      return card;
+    }
+
+    async function loadCatalog(ids) {
+      catalog.replaceChildren();
+      status.classList.remove("error");
+      status.textContent = `${ids.length}件を取得中...`;
+
+      let found = 0;
+      for (let index = 0; index < ids.length; index += 10) {
+        const batch = ids.slice(index, index + 10);
+        const results = await Promise.all(batch.map(async (id) => {
+          try {
+            return await getPokemon(id);
+          } catch (error) {
+            if (error.message === "HTTP 404") {
+              return null;
+            }
+            throw new Error(`ID ${id} の取得に失敗しました: ${error.message}`);
+          }
+        }));
+
+        for (const pokemon of results) {
+          if (pokemon) {
+            catalog.append(createCard(pokemon));
+            found += 1;
+          }
+        }
+        status.textContent = `${ids.length}件中 ${Math.min(index + 10, ids.length)}件を確認中...`;
+      }
+
+      status.textContent = `${found}件表示（データなし: ${ids.length - found}件）`;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        const ids = parseIds(input.value);
+        const url = new URL(location.href);
+        url.searchParams.set("ids", input.value.trim());
+        history.replaceState(null, "", url);
+        await loadCatalog(ids);
+      } catch (error) {
+        status.classList.add("error");
+        status.textContent = error.message;
+      }
+    });
+
+    const initialIds = new URL(location.href).searchParams.get("ids");
+    if (initialIds) {
+      input.value = initialIds;
+    }
+    form.requestSubmit();
+  </script>
+</body>
+</html>

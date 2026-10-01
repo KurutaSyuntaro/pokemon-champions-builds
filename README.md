@@ -40,7 +40,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy.ps1 -Target builds -CommitMess
 ## ローカルでプレビューしたい場合
 
 ```powershell
-& "C:\Users\tkudo\.local\bin\python3.14.exe" site/build.py
+python site/build.py
 ```
 
 `site/index.html` をブラウザで開いて確認できる。  
@@ -60,3 +60,12 @@ SPRITE_ID: dict[str, int] = {
 ```
 
 PokeAPI の ID は https://pokeapi.co/ で確認できる。
+
+### スプライト ID をまとめて確認する
+
+`sprite-catalog.html` をブラウザで開き、IDまたは範囲を入力する。
+
+- 単一ID: `10030`
+- 範囲: `10300-10320`
+
+画像・ID・日本語名・英語名をまとめて確認できる。Pythonの実行は不要。
