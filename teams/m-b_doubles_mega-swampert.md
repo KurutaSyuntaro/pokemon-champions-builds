@@ -33,9 +33,10 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png" width="68" alt="オーロンゲ">
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/279.png" width="68" alt="ペリッパー">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/260.png" width="68" alt="ラグラージ">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/987.png" width="68" alt="キラフロル">
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1012.png" width="68" alt="ヤバソチャ">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png" width="68" alt="メガラグラージ">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10321.png" width="68" alt="メガキラフロル">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1018.png" width="68" alt="ブリジュラス">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1013.png" width="68" alt="ヤバソチャ">
 </p>
 
 ### ① オーロンゲ＠ロゼルのみ（いたずらごころ壁サポート）
