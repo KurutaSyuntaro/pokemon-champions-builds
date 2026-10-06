@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メガカメックス＋メガバクーダ軸トリックルーム構築 M-C（マスターボール級達成） — ポケモンチャンピオンズ 構築記録</title>
+  <style>:root{--bg:#f5f6fa;--surface:#fff;--card:#e8edf5;--accent:#e05070;--text:#2d3048;--text-muted:#6b7080;--border:#d8dce6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,#4a90d9,#e05070);padding:2.5rem 1rem 2rem;text-align:center;border-bottom:3px solid var(--accent);color:#fff}
+header h1{font-size:1.8rem;letter-spacing:.05em}header h1 a{color:#fff;text-decoration:none}
+header p{color:rgba(255,255,255,.85);margin-top:.4rem;font-size:.95rem}
+main{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:2rem;align-items:start}
+.content{min-width:0}
+.sidebar{position:sticky;top:1.5rem}
+.breadcrumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--accent)}
+
+/* --- index cards --- */
+.post-list{display:flex;flex-direction:column;gap:1.5rem}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .15s;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);text-decoration:none}
+.tool-card{background:linear-gradient(135deg,#fff3e8,#fff);border:1px solid #ffd3a6}
+.tool-card .post-meta h2{color:#b85a00}
+.tool-card .tag.tool{background:#b85a00}
+.post-card-inner{display:flex;gap:1.2rem;padding:1.2rem 1.5rem;align-items:center}
+.post-sprites{display:flex;gap:.3rem;flex-shrink:0}
+.post-sprites img{width:40px;height:40px;object-fit:contain}
+.post-meta{flex:1;min-width:0}
+.post-meta h2{font-size:1.15rem;margin-bottom:.3rem;color:var(--text)}
+.post-meta .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.4rem}
+.post-meta .excerpt{font-size:.88rem;color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:.72rem;padding:.15rem .55rem;border-radius:999px;background:var(--accent);color:#fff;font-weight:600}
+.tag.doubles{background:#2d9d6a}.tag.singles{background:#4a90d9}.tag.reg{background:#7c6bc4}.tag.latest{background:#e0a020}
+
+/* --- article --- */
+.article-header{margin-bottom:1.5rem}
+.article-header h2{font-size:1.5rem;margin-bottom:.5rem}
+.article-header .tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.concept{background:var(--bg);border-left:4px solid var(--accent);padding:.8rem 1rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-muted)}
+.party-sprites{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.party-sprites img{width:56px;height:56px;object-fit:contain;background:var(--card);border-radius:8px;padding:4px}
+.pokemon-slot{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
+.pokemon-sprite{width:68px;height:68px;flex-shrink:0;border-radius:8px;background:var(--card);object-fit:contain}
+.pokemon-info{flex:1;min-width:0}
+.pokemon-slot h3{font-size:1rem;margin-bottom:.5rem;color:var(--accent)}
+.pokemon-slot table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:.6rem}
+.pokemon-slot th{text-align:left;padding:.25rem .5rem;color:var(--text-muted);width:80px;font-weight:normal}
+.pokemon-slot td{padding:.25rem .5rem}
+.moves{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem}
+.moves li{background:var(--card);padding:.2rem .7rem;border-radius:6px;font-size:.85rem}
+.pokemon-note{font-size:.85rem;color:var(--text-muted);margin-top:.4rem}
+.selection{margin-top:1.5rem}.selection h3{font-size:1.1rem;margin-bottom:.8rem}
+.sel-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin-bottom:.8rem}
+.sel-block h4{font-size:.95rem;color:var(--accent);margin-bottom:.3rem}
+.sel-block p,.sel-block ol{font-size:.9rem;color:var(--text-muted)}.sel-block ol{padding-left:1.2rem}
+.team-images{margin-bottom:1.5rem}
+.team-images h3{font-size:1rem;margin-bottom:.5rem}
+.team-images-grid{display:flex;flex-wrap:wrap;gap:.8rem}
+.team-images-grid img{max-width:100%;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .15s}
+.team-images-grid img:hover{transform:scale(1.02)}
+.team-images-grid a{display:block;flex:1;min-width:min(100%,280px)}
+.nav-links{display:flex;justify-content:space-between;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.9rem}
+.nav-links a{display:flex;align-items:center;gap:.3rem}
+.social-links{display:flex;justify-content:center;gap:1rem;margin-top:.8rem}
+.social-links a{color:rgba(255,255,255,.9);font-size:.85rem;display:flex;align-items:center;gap:.3rem;padding:.3rem .7rem;border-radius:999px;background:rgba(255,255,255,.15);transition:background .15s;text-decoration:none}
+.social-links a:hover{background:rgba(255,255,255,.3);text-decoration:none}
+.social-links svg{width:16px;height:16px;fill:currentColor}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;text-align:center;gap:.8rem}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--card);object-fit:cover}
+.profile-body{min-width:0}
+.profile-body .name{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.profile-body .bio{font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem}
+.profile-links{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.profile-links a{font-size:.75rem;display:flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:999px;background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
+.profile-links a:hover{background:var(--border);text-decoration:none}
+.profile-links svg{width:14px;height:14px;fill:currentColor}
+.tool-panel{margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tool-panel .label{font-size:.72rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;margin-bottom:.4rem}
+.tool-panel .title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+.tool-panel .desc{font-size:.82rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
+.tool-panel .cta{display:inline-flex;align-items:center;justify-content:center;padding:.45rem .9rem;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:.82rem;font-weight:700}
+.tool-panel .cta:hover{filter:brightness(.95);text-decoration:none}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}}
+footer{text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:.8rem}
+footer a{color:var(--accent)}
+@media(max-width:768px){.pokemon-slot{flex-direction:column;align-items:center;text-align:center}.pokemon-sprite{width:80px;height:80px}.post-card-inner{flex-direction:column;text-align:center}.post-sprites{justify-content:center}}</style>
+</head>
+<body>
+<header>
+  <h1><a href="../index.html">ポケモンチャンピオンズ 構築記録</a></h1>
+  <p>構築済みパーティーの記録・共有サイト</p>
+  <div class="social-links">
+    <a href="https://x.com/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><a href="https://www.youtube.com/channel/UCKtkqYAP5NbS6oTmI3BazFg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg>YouTube</a><a href="https://qiita.com/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.4a9.6 9.6 0 1 1 0 19.2 9.6 9.6 0 0 1 0-19.2zm-.96 4.32a5.28 5.28 0 1 0 0 10.56 5.28 5.28 0 0 0 0-10.56zm5.04.72 1.68 1.68-2.4 2.4-1.68-1.68z"/></svg>Qiita</a><a href="https://github.com/KurutaSyuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a><a href="https://zenn.dev/kuruta_syuntaro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.264 23.771h4.984c.264 0 .498-.147.645-.352L19.614.874c.176-.293-.029-.645-.381-.645h-4.72c-.235 0-.44.117-.587.323L.03 23.361c-.088.176.029.41.234.41zM17.445 23.419l6.479-10.408c.176-.293-.029-.645-.381-.645h-4.72c-.235 0-.44.117-.586.323l-6.479 10.408c-.176.293.029.645.381.645h4.72c.234 0 .44-.117.586-.323z"/></svg>Zenn</a>
+  </div>
+</header>
+<main>
+<div class="breadcrumb"><a href="../index.html">トップ</a> &gt; メガカメックス＋メガバクーダ軸トリックルーム構築 M-C（マスターボール級達成）</div>
+<div class="article-header">
+  <h2>メガカメックス＋メガバクーダ軸トリックルーム構築 M-C（マスターボール級達成）</h2>
+  <div class="tags">
+    <span class="tag reg">M-C</span>
+    <span class="tag doubles">ダブル</span>
+    
+  </div>
+</div>
+<div class="concept">オオニューラとカメックスの「ねこだまし」でトリックルームの始動を補助し、メガカメックスの「しおふき」かメガバクーダの「ふんか」で相手2体へ圧力をかける。カメックス軸ではリキキリンの「あまごい」でみず技とブリジュラスのエレクトロビームを強化。バクーダ軸では雨を使わず、トリックルームと回復でふんかを通す。</div>
+<div class="party-sprites"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png" alt="オオニューラ♂" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10036.png" alt="メガカメックス♂" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1013.png" alt="ヤバソチャ" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1018.png" alt="ブリジュラス♂" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10087.png" alt="メガバクーダ♀" loading="lazy"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/981.png" alt="リキキリン♀" loading="lazy"></div>
+
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png" alt="オオニューラ♂" loading="lazy">
+  <div class="pokemon-info">
+    <h3>① オオニューラ♂＠きあいのタスキ（高速サポート兼物理アタッカー）</h3>
+    <table><tr><th>特性</th><td>どくしゅ</td></tr><tr><th>性格</th><td>いじっぱり（A↑ C↓）</td></tr><tr><th>努力値</th><td>H2 A32 B0 C0 D0 S32</td></tr></table>
+    <ul class="moves"><li>どくづき</li><li>いわなだれ</li><li>インファイト</li><li>ねこだまし</li></ul>
+    <p class="pokemon-note">S172からのねこだましで相手1体を止め、ヤバソチャかリキキリンのトリックルームを補助する。トリックルームを使わないターンはA200のどくづき・インファイトで単体を削り、いわなだれで相手2体へ圧力をかける。きあいのタスキにより行動機会を作りやすい一方、トリックルーム中は味方より先に動きにくくなるため、始動後は交代も選択肢。</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10036.png" alt="メガカメックス♂" loading="lazy">
+  <div class="pokemon-info">
+    <h3>② メガカメックス♂＠カメックスナイト（メガ特殊エース兼始動補助）</h3>
+    <table><tr><th>特性</th><td>あめうけざら</td></tr><tr><th>性格</th><td>れいせい（C↑ S↓）</td></tr><tr><th>努力値</th><td>H32 A0 B2 C32 D0 S0</td></tr></table>
+    <ul class="moves"><li>あくのはどう</li><li>はどうだん</li><li>しおふき</li><li>ねこだまし</li></ul>
+    <p class="pokemon-note">メガ枠の特殊アタッカー。初手ではねこだましでトリックルームを通し、次のターンからしおふきで相手2体を削る流れが基本となる。リキキリンのあまごいでしおふきを強化できる。HPが減ると威力も下がるため、ヤバソチャのおもてなし・いのちのしずくや、リキキリンのてだすけで火力を補いたい。あくのはどうとはどうだんは、HPが減った後も安定して使える単体打点。</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1013.png" alt="ヤバソチャ" loading="lazy">
+  <div class="pokemon-info">
+    <h3>③ ヤバソチャ＠カシブのみ（トリックルーム始動＋回復）</h3>
+    <table><tr><th>特性</th><td>おもてなし</td></tr><tr><th>性格</th><td>のんき（B↑ S↓）</td></tr><tr><th>努力値</th><td>H32 A0 B2 C0 D32 S0</td></tr></table>
+    <ul class="moves"><li>シャカシャカほう</li><li>トリックルーム</li><li>いのちのしずく</li><li>いかりのこな</li></ul>
+    <p class="pokemon-note">もう1体のトリックルーム始動役。基本選出では後発から繰り出し、おもてなしで削れたカメックスを回復させる。着地後はいかりのこなで攻撃を引き受け、いのちのしずくも使ってしおふき・ふんかの威力を維持する。カシブのみで弱点のゴースト技を軽減でき、必要なら自らトリックルームを再展開する。</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1018.png" alt="ブリジュラス♂" loading="lazy">
+  <div class="pokemon-info">
+    <h3>④ ブリジュラス♂＠たべのこし（耐久特殊アタッカー）</h3>
+    <table><tr><th>特性</th><td>じきゅうりょく</td></tr><tr><th>性格</th><td>れいせい（C↑ S↓）</td></tr><tr><th>努力値</th><td>H32 A0 B0 C32 D2 S0</td></tr></table>
+    <ul class="moves"><li>エレクトロビーム</li><li>りゅうせいぐん</li><li>ラスターカノン</li><li>まもる</li></ul>
+    <p class="pokemon-note">C194の高火力と、じきゅうりょくによる物理耐久上昇を両立した中速アタッカー。リキキリンのあまごい下ではエレクトロビームを溜めなしで使いながらCを上げられる。雨がない場面ではりゅうせいぐんとラスターカノンを主力にし、まもるでトリックルーム始動や天候展開を待つ。</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10087.png" alt="メガバクーダ♀" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑤ メガバクーダ♀（Camerupt）＠バクーダナイト（トリル特殊エース）</h3>
+    <table><tr><th>特性</th><td>ハードロック</td></tr><tr><th>性格</th><td>れいせい（C↑ S↓）</td></tr><tr><th>努力値</th><td>H32 A0 B0 C32 D2 S0</td></tr></table>
+    <ul class="moves"><li>げんしのちから</li><li>だいちのちから</li><li>ふんか</li><li>まもる</li></ul>
+    <p class="pokemon-note">メガカメックスと選択するトリックルーム用メガエース。S54の遅さを生かし、トリックルーム下でふんかを先に通す。HPが減るとふんかの威力が落ちるため、おもてなし・いのちのしずくで回復させながら運用する。だいちのちからはHPに依存しない一致単体打点、げんしのちからはいわ打点。みず技が4倍弱点なので、相手の技範囲を確認して選出する。</p>
+  </div>
+</div>
+<div class="pokemon-slot">
+  <img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/981.png" alt="リキキリン♀" loading="lazy">
+  <div class="pokemon-info">
+    <h3>⑥ リキキリン♀（Farigiraf）＠オボンのみ（トリックルーム始動＋補助）</h3>
+    <table><tr><th>特性</th><td>テイルアーマー</td></tr><tr><th>性格</th><td>のんき（B↑ S↓）</td></tr><tr><th>努力値</th><td>H32 A0 B17 C0 D17 S0</td></tr></table>
+    <ul class="moves"><li>サイコキネシス</li><li>てだすけ</li><li>トリックルーム</li><li>あまごい</li></ul>
+    <p class="pokemon-note">基本選出のトリックルーム始動役。テイルアーマーで相手の先制技から味方を守り、オボンのみとH227の耐久で行動回数を確保する。カメックス軸ではあまごいでしおふきを強化し、ブリジュラスのエレクトロビームを即時発動させる。トリックルーム展開後はてだすけで味方の火力をさらに伸ばす。雨でふんかが弱くなるため、バクーダ軸ではあまごいを使わない。 メガシンカは1試合に1回だけなので、カメックスとバクーダは基本的に同時選出しない。相手のみず耐性、ほのお・じめん耐性、ワイドガードの有無、トリックルーム下の素早さ関係を見て、通りのよい方を選ぶ。</p>
+  </div>
+</div>
+<div class="selection"><h3>選出テンプレ</h3>
+<div class="sel-block"><h4>▶ 基本：メガカメックス軸</h4><p><strong>先発：リキキリン＋カメックス</strong><br><strong>後発：ヤバソチャ＋ブリジュラス</strong><br>---</p><ol><li>カメックスのねこだましで片方を止め、リキキリンがトリックルーム</li><li>リキキリンのあまごい＋メガカメックスのしおふきで相手2体を削る</li><li>カメックスが削れたらリキキリンをヤバソチャへ交代し、おもてなしで回復</li><li>ヤバソチャのいかりのこな・いのちのしずくでカメックスを守り、終盤は雨下のブリジュラスで詰める</li></ol></div>
+<div class="sel-block"><h4>▶ ふんかトリックルーム</h4><p><strong>先発：オオニューラ＋リキキリン</strong><br><strong>後発：バクーダ＋ヤバソチャ</strong><br>---</p><ol><li>オオニューラのねこだまし＋リキキリンのトリックルーム</li><li>オオニューラをバクーダへ交代</li><li>リキキリンのてだすけ＋メガバクーダのふんかで全体を削る</li><li>ヤバソチャのおもてなし・いかりのこな・いのちのしずくでふんかの威力を守る</li></ol></div>
+<div class="sel-block"><h4>▶ 対ねこだまし・先制技</h4><p><strong>先発：リキキリン＋カメックス</strong>  <br><strong>後発：ヤバソチャ＋刺さるアタッカー</strong><br><br>- テイルアーマーで相手の先制技を防ぎながらトリックルームを狙う<br>- カメックスはねこだましで、トリックルームを妨害しそうな相手を止める<br>- 相手の攻撃が集中しそうならカメックスを守るのではなく、後発へ交代してHPを温存する<br><br>---</p></div>
+<div class="sel-block"><h4>▶ 雨カメックス＋ブリジュラス</h4><p><strong>先発：オオニューラ＋リキキリン</strong>  <br><strong>後発：カメックス＋ブリジュラス</strong><br><br>- オオニューラのねこだましで、リキキリンがあまごいを使う隙を作る<br>- 雨でカメックスのしおふきを強化し、ブリジュラスのエレクトロビームを即時発動させる<br>- 相手が高速構築ならトリックルームも展開し、2体の特殊アタッカーを先に動かす<br><br>---</p></div>
+</div>
+<div class="nav-links"><div><a href="m-b_singles_mega-metagross.html">← メガメタグロス軸シングルバトル構築 M-B（マスターボール級達成）</a></div><div><a href="m-b_singles_mega-charizard-y.html">メガリザードンY軸シングルバトル構築 M-B →</a></div></div>
+</main>
+<footer>
+  <p>ポケモンチャンピオンズ 構築記録 — <a href="https://github.com/KurutaSyuntaro/pokemon-champions-builds">GitHub</a></p>
+</footer>
+</body>
+</html>
